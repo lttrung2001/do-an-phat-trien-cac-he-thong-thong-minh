@@ -1,0 +1,65 @@
+* {
+    padding: 0;
+    margin: 0;
+
+    box-sizing: border-box;
+}
+
+
+html,
+input,
+button {
+    font-family: Poppins, sans-serif;
+    font-size: 10px;
+}
+
+body {
+    font-size: 1.6rem;
+}
+
+input,
+button {
+    border: none;
+    outline: none;
+
+    background-color: none;
+}
+
+ul,
+ol,
+li {
+    list-style: none;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.jc-center {
+    justify-content: center !important;
+}
+
+.jc-space-between {
+    justify-content: space-between !important;
+}
+
+.jc-flex-end {
+    justify-content: flex-end !important;
+}
+
+.ai-center {
+    align-items: center !important;
+}
+
+.ai-flex-start {
+    align-items: flex-start;
+}

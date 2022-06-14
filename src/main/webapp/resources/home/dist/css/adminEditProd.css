@@ -1,0 +1,471 @@
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin: -10px;
+}
+
+.row .col-1 {
+  display: block;
+  width: 8.33333%;
+  padding: 10px;
+}
+
+.row .col-1 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-2 {
+  display: block;
+  width: 16.66667%;
+  padding: 10px;
+}
+
+.row .col-2 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-3 {
+  display: block;
+  width: 25%;
+  padding: 10px;
+}
+
+.row .col-3 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-4 {
+  display: block;
+  width: 33.33333%;
+  padding: 10px;
+}
+
+.row .col-4 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-5 {
+  display: block;
+  width: 41.66667%;
+  padding: 10px;
+}
+
+.row .col-5 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-6 {
+  display: block;
+  width: 50%;
+  padding: 10px;
+}
+
+.row .col-6 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-7 {
+  display: block;
+  width: 58.33333%;
+  padding: 10px;
+}
+
+.row .col-7 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-8 {
+  display: block;
+  width: 66.66667%;
+  padding: 10px;
+}
+
+.row .col-8 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-9 {
+  display: block;
+  width: 75%;
+  padding: 10px;
+}
+
+.row .col-9 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-10 {
+  display: block;
+  width: 83.33333%;
+  padding: 10px;
+}
+
+.row .col-10 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-11 {
+  display: block;
+  width: 91.66667%;
+  padding: 10px;
+}
+
+.row .col-11 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.row .col-12 {
+  display: block;
+  width: 100%;
+  padding: 10px;
+}
+
+.row .col-12 .col-item {
+  -webkit-box-shadow: 0 0 4px -2px;
+          box-shadow: 0 0 4px -2px;
+}
+
+.aside {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  background-color: white;
+  padding: 20px 30px;
+}
+
+.aside .admin {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 50px;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+.aside .admin .logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1e90ff;
+  margin-right: 12px;
+  color: white;
+  overflow: hidden;
+  position: relative;
+}
+
+.aside .admin .logo img {
+  position: absolute;
+}
+
+.aside .functions .function a {
+  padding: 12px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #666;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  font-size: 14px;
+}
+
+.aside .functions .function a .icon {
+  width: 40px;
+  margin-right: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 20px;
+}
+
+.aside .functions .function a.active {
+  color: #1e90ff;
+}
+
+.aside .functions .function a:hover {
+  color: #1e90ff;
+}
+
+.aside .btn-log-out {
+  margin-top: 420px;
+  cursor: pointer;
+  width: 100%;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e90ff;
+  border-radius: 12px;
+  background-color: rgba(30, 144, 255, 0.1);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.aside .btn-log-out:hover {
+  color: white;
+  background-color: #1e90ff;
+}
+
+.aside .btn-log-out {
+  width: calc(100% - 60px);
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+}
+
+body {
+  background-color: #FEFAF4;
+}
+
+.main {
+  padding: 20px 40px;
+  margin-left: 280px;
+  width: calc(100vw - 280px);
+}
+
+.main-header {
+  margin-bottom: 20px;
+  height: 60px;
+}
+
+.main-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 23.4px;
+  letter-spacing: -0.12px;
+  margin-bottom: 4px;
+}
+
+.main-header .map {
+  color: #666;
+  font-size: 13px;
+}
+
+.main-header .map a {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+  color: #666;
+}
+
+.main-header .map a:hover {
+  color: #1e90ff;
+}
+
+.main .cloth-temp {
+  height: 90%;
+  width: 100%;
+  background-color: #ccc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main .cloth-temp i {
+  font-size: 100px;
+  color: #eee;
+}
+
+.main .field {
+  margin-bottom: 10px;
+}
+
+.main .field label {
+  margin-top: 14px;
+  font-size: 15px;
+  color: #666;
+}
+
+.main .field input,
+.main .field select {
+  display: block;
+  width: 90%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-weight: 600;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #222;
+}
+
+.main .field input:-moz-read-only {
+  color: #aaa;
+}
+
+.main .field input:read-only {
+  color: #aaa;
+}
+
+.main .field .form-control {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 40px;
+}
+
+.main .field .form-control input {
+  width: 56px;
+  height: 43px;
+  border: 1px solid #ebebeb;
+  border-width: 1px 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+  padding-left: 16px;
+}
+
+.main .field .form-control button {
+  width: 32px;
+  height: 43px;
+  background: none;
+  border: 1px solid #ebebeb;
+  font-size: 12px;
+  color: #222;
+  cursor: pointer;
+  border-radius: 3px 0 0 3px;
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+}
+
+.main .field .form-control button:last-child {
+  border-radius: 0  3px 3px 0;
+}
+
+.main .btn {
+  background-color: #1e90ff;
+  padding: 12px 20px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 4px;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  margin-left: 0 auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+  position: absolute;
+  right: 80px;
+  bottom: 20px;
+}
+
+.main .btn:hover {
+  opacity: 0.9;
+}
+
+.form-control {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 40px;
+}
+
+.form-control input {
+  width: 48px;
+  height: 43px;
+  border: 1px solid #ebebeb;
+  border-width: 1px 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+  padding-left: 16px;
+}
+
+.form-control button {
+  width: 30px;
+  height: 43px;
+  background: none;
+  border: 1px solid #ebebeb;
+  font-size: 12px;
+  color: #222;
+  cursor: pointer;
+  border-radius: 3px 0 0 3px;
+}
+
+.form-control button:last-child {
+  border-radius: 0  3px 3px 0;
+}
+
+.product-form {
+  margin-bottom: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.product-form label {
+  display: inline-block;
+  color: #222;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.4px;
+  line-height: 37px;
+  margin-bottom: 10px;
+  min-width: 70px;
+}
+
+.product-form select {
+  margin-bottom: 10px;
+  padding: 8px 30px 8px 14px;
+  border: 1px solid #ebebeb;
+  border-radius: 2px;
+  color: #222;
+  font-size: 13px;
+  line-height: 19.5px;
+}
+/*# sourceMappingURL=adminEditProd.css.map */
