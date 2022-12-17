@@ -52,16 +52,16 @@ public class Account {
 	@JoinColumn(name = "Role")
 	private Role role;
 	
-	@OneToMany(mappedBy = "emails", fetch = FetchType.EAGER)
-	private Collection<Account> emails;
-	
-	public Collection<Account> getEmails() {
-		return emails;
-	}
-
-	public void setEmails(Collection<Account> emails) {
-		this.emails = emails;
-	}
+//	@OneToMany(mappedBy = "emails", fetch = FetchType.EAGER)
+//	private Collection<Account> emails;
+//	
+//	public Collection<Account> getEmails() {
+//		return emails;
+//	}
+//
+//	public void setEmails(Collection<Account> emails) {
+//		this.emails = emails;
+//	}
 
 	public Role getrole() {
 		return role;
