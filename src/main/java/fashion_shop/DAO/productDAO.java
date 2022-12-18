@@ -1,7 +1,9 @@
 package fashion_shop.DAO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -80,6 +82,30 @@ public class productDAO {
 		list.add("Yellow");
 		
 		return list;
+	}
+	
+	public List<String> getLBrand() {
+		List<String> list = new ArrayList<String>();
+		list.add("Nike");
+		list.add("Louis Vuitton");
+		list.add("GUCCI");
+		list.add("Chanel");
+		list.add("Adidas");
+		list.add("Hermes");
+		list.add("ZARA");
+		list.add("H&M");
+		list.add("Cartier");
+		list.add("Dior");
+		list.add("UNIQLO");
+		
+		return list;
+	}
+	
+	public Map<Integer, String> getHMGender() {
+		Map<Integer, String> map = new HashMap<Integer, String>();
+		map.put(0, "Nu");
+		map.put(1, "Nam");
+		return map;
 	}
 	
 	public boolean saveProduct( Product prod) {
