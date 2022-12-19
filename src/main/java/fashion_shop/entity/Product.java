@@ -46,10 +46,13 @@ public class Product {
 	
 	@Column(name = "ProductCluster")
 	private int productCluster;
+	
+	@Column(name = "ProductMaterial")
+	private String material;
 
 public Product(String idProduct, String name, float price, String image, String brand, boolean gender,
 			int releaseTime, String productType, int productCluster, Collection<Cart> carts,
-			ProductCategory prodCategory) {
+			ProductCategory prodCategory, String material) {
 		super();
 		this.idProduct = idProduct;
 		this.name = name;
@@ -61,8 +64,11 @@ public Product(String idProduct, String name, float price, String image, String 
 		this.productType = productType;
 		this.productCluster = productCluster;
 		this.carts = carts;
-		ProdCategory = prodCategory;
+		this.material = material;
+		this.ProdCategory = prodCategory;
 	}
+
+
 
 //	@OneToMany(mappedBy = "prod", fetch = FetchType.EAGER)
 //	private Collection<OrderDetail> orderDetails;
@@ -169,6 +175,14 @@ public Product(String idProduct, String name, float price, String image, String 
 
 	public void setProdCategory(ProductCategory prodCategory) {
 		ProdCategory = prodCategory;
+	}
+
+	public String getMaterial() {
+		return material;
+	}
+
+	public void setMaterial(String material) {
+		this.material = material;
 	}
 
 //	public Collection<OrderDetail> getOrderDetails() {
