@@ -90,32 +90,38 @@ public class HomeController {
 	// view product_detail
 	@RequestMapping(value = { "detail/{idProduct}" },method = RequestMethod.GET)
 	public String view_product_detail(ModelMap model, @PathVariable("idProduct") String id, HttpSession session) {
-		DBService db = new DBService(factory);
-		Product product = db.getProductById(id);
-		Account account = (Account) session.getAttribute("acc");
-		if (account == null) {
-			return "home/detail";
-		}
-
-		CartItem cartItem = new CartItem();
-		cartItem.setUserPhone(account.getPhone());
-		cartItem.setIdProduct(product.getIdProduct());
-		cartItem.setName(product.getName());
-		cartItem.setPrice(product.getPrice());
-		cartItem.setImage(product.getImage());
+//		DBService db = new DBService(factory);
+//		Product product = db.getProductById(id);
+//		Account account = (Account) session.getAttribute("acc");
+//		if (account == null) {
+//			return "home/detail";
+//		}
+//
+//		CartItem cartItem = new CartItem();
+//		cartItem.setUserPhone(account.getPhone());
+//		cartItem.setIdProduct(product.getIdProduct());
+//		cartItem.setName(product.getName());
+//		cartItem.setPrice(product.getPrice());
+//		cartItem.setImage(product.getImage());
+//		
+//		List<Product> list = productDAL.getLProd();
+//		int size = productDAL.getLProd().size();
+//		List<ProductCategory> listCate = productDAL.getLCat();
+//		model.addAttribute("prods", list); 
+//		model.addAttribute("prodsSize", size);
+//		model.addAttribute("listCat", listCate);
+//		
+////		model.addAttribute("catON", "true");
+////		model.addAttribute("catID", idCategory);
+//
+//
+//		model.addAttribute("cartItem", cartItem);
+//		return "home/detail";
 		
-		List<Product> list = productDAL.getLProd();
-		int size = productDAL.getLProd().size();
-		List<ProductCategory> listCate = productDAL.getLCat();
-		model.addAttribute("prods", list); 
-		model.addAttribute("prodsSize", size);
-		model.addAttribute("listCat", listCate);
-		
-//		model.addAttribute("catON", "true");
-//		model.addAttribute("catID", idCategory);
-
-
-		model.addAttribute("cartItem", cartItem);
+		Product currentProduct = productDAL.getProduct(id);
+		List<Product> relatedProduct = productDAL.getProductsByCluster(id);
+		model.addAttribute("product", currentProduct);
+		model.addAttribute("relatedProducts", relatedProduct);
 		return "home/detail";
 	}
 	
