@@ -51,7 +51,7 @@ public class productDAO {
 		Session session = factory.getCurrentSession();
 		Product currentProduct = (Product) session.get(Product.class, id);
 		String hql = String.format("from Product where id != %s and productCluster = %d", currentProduct.getIdProduct(), currentProduct.getProductCluster());
-		Query query = session.createQuery(hql);
+		Query query = session.createQuery(hql).setMaxResults(20);
 		List<Product> listProd = query.list();
 		return listProd;
 	}
