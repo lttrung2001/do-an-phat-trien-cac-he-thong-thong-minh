@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "Product")
@@ -49,6 +50,10 @@ public class Product {
 	
 	@Column(name = "ProductMaterial")
 	private String material;
+	
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER, targetEntity = Rating.class)
+	private Collection<Rating> ratings;
+	
 
 public Product(String idProduct, String name, float price, String image, String brand, boolean gender,
 			int releaseTime, String productType, int productCluster, Collection<Cart> carts,
@@ -184,6 +189,23 @@ public Product(String idProduct, String name, float price, String image, String 
 	public void setMaterial(String material) {
 		this.material = material;
 	}
+
+	@Override
+	public String toString() {
+		return "Product [idProduct=" + idProduct + ", name=" + name + ", price=" + price + ", image=" + image
+				+ ", brand=" + brand + ", gender=" + gender + ", releaseTime=" + releaseTime + ", productType="
+				+ productType + ", productCluster=" + productCluster + ", material=" + material + ", ratings=" + ratings
+				+ ", carts=" + carts + ", ProdCategory=" + ProdCategory + "]";
+	}
+
+	public Collection<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Collection<Rating> ratings) {
+		this.ratings = ratings;
+	}
+
 
 //	public Collection<OrderDetail> getOrderDetails() {
 //		return orderDetails;
