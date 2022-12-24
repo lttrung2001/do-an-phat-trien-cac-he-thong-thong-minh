@@ -117,17 +117,12 @@ pageEncoding="UTF-8"%>
             <section class="show-products" style="padding-bottom: 50px;">
                 <div class="container">
     
-                    Title 
                     <h4 class="title">
                         Related Products
                         <a href="home/products.htm" class="more hover-p-color">VIEW MORE <i class="fa-solid fa-arrow-right"></i></a>
                     </h4>
-    
-                    List Product Show
                     <div class="owl-carousel owl-theme">
-    
-                         A product 
-					<c:forEach var="p" items="${relatedProducts}" begin="0" end="15" step="3">
+					<c:forEach var="p" items="${relatedProducts}" begin="0" end="20" step="3">
 						<div class="col-4 product">
 							<div class="product-image">
 								<img
@@ -136,7 +131,7 @@ pageEncoding="UTF-8"%>
 
 								<div class="new">NEW</div>
 
-								<a href="home/detail/${p.idProduct}.htm" class="btn-view">VIEW DETAILS</a> <a
+								<a href="home/detail/${p.idProduct}.htm?history=${history.id }" class="btn-view">VIEW DETAILS</a> <a
 									href="" class="btn-add"> <i
 									class="fa-solid fa-bag-shopping"></i>
 								</a>
@@ -146,7 +141,7 @@ pageEncoding="UTF-8"%>
 								<a href="" class="product-category hover-p-color">${p.getProductCategory().nameCategory }</a>
 
 								<h2>
-									<a href="home/detail/${p.idProduct}.htm" class="product-name hover-p-color">${p.name }</a>
+									<a href="home/detail/${p.idProduct}.htm?history=${history.id }" class="product-name hover-p-color">${p.name }</a>
 								</h2>
 
 								<p class="product-price">${p.price }</p>
@@ -175,9 +170,6 @@ pageEncoding="UTF-8"%>
         </div>
     </main>
 
-    
-
-    Footer 
      <%@include file="/WEB-INF/views/footer.jsp"%>
 
 </body>
