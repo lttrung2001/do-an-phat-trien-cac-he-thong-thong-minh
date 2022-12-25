@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import collections, numpy
 import numpy as np
 import pyodbc
+import sys
 # pip install SQLAlchemy
 from sqlalchemy.engine import URL
 from sqlalchemy import create_engine
@@ -19,12 +20,11 @@ connection_url = URL.create("mssql+pyodbc", query={"odbc_connect": connection_st
 
 engine = create_engine(connection_url)
 
-query = "SELECT ID,Price,Brand,Gender,ReleaseTime,ProductType,ProductMaterial FROM Product"
+query = "SELECT Product.ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM (SELECT * FROM History WHERE SessionID = '{0}') AS H INNER JOIN Product ON Product.ID = H.ProductID".format(str(sys.argv[1]))
 df = pd.read_sql(query, engine)
 
 list_ID=df["ID"].values.tolist()
 df.drop(['ID'], axis=1, inplace=True)
-
 X=df
 brandInt=X['Brand']
 typeInt=X['ProductType']
@@ -45,37 +45,10 @@ ms = MinMaxScaler()
 
 X = ms.fit_transform(X)
 X = pd.DataFrame(X, columns=[cols])
-# print(X.head())
+X = X.mean(axis=0)
+# load model
+with open("C:/Users/THANHTRUNG/OneDrive - student.ptithcm.edu.vn/Desktop/eclipse_workspace/do-an-phat-trien-cac-he-thong-thong-minh/model.pkl", "rb") as f:
+    kmeans = pickle.load(f)
+print(kmeans.predict([[X[0], X[1], X[2], X[3], X[4], X[5]], ])[0])
 
-
-def find_K(dataset):
-  distortions = []
-  K = range(1,10)
-  for k in K:
-      kmeanModel = KMeans(n_clusters=k)
-      kmeanModel.fit(dataset)
-      distortions.append(kmeanModel.inertia_)
-    #   print(kmeanModel.inertia_)
-  
-  for i in range(1, len(distortions)):
-    if distortions[i] / distortions[i-1] > 0.93:
-      return i
-
-print(find_K(X))
-kmeans = KMeans(n_clusters=find_K(X), random_state=0) 
-cluster_list=kmeans.fit_predict(X)
-# save model
-with open("C:/Users/THANHTRUNG/OneDrive - student.ptithcm.edu.vn/Desktop/eclipse_workspace/do-an-phat-trien-cac-he-thong-thong-minh/model.pkl", "wb") as f:
-    pickle.dump(kmeans, f)
-# In list cụm:
-print(cluster_list)
-# Lấy số lượng trong mỗi cụm
-print(collections.Counter(cluster_list))    
-
-
-# print(df[df.columns[0]].count())
-# updating_cluster="UPDATE Product SET ProductCluster=1 where Product.ID<10"
-
-
-for i in range(df[df.columns[0]].count()):
-    engine.execute('UPDATE Product SET ProductCluster='+ str(cluster_list[i]) + ' where Product.ID='+str(list_ID[i]))
+    
