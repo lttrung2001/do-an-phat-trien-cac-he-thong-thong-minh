@@ -88,10 +88,6 @@ public class HomeController {
 			@PathVariable("idProduct") String id, 
 			HttpSession session) throws IOException, InterruptedException  {
 		System.out.println("viewdetail1");
-		Product currentProduct = productDAL.getProduct(id);
-		List<Product> relatedProduct = productDAL.getProductsByCluster(id);
-		model.addAttribute("product", currentProduct);
-		model.addAttribute("relatedProducts", relatedProduct);
 		
 		// Get account in http session
 		Account account = (Account) session.getAttribute("acc");
@@ -100,6 +96,11 @@ public class HomeController {
 		History history = historyDAO.saveHistory(new History(0, username, new Date(), session.getId(), id, null));
 		// Pass history data row to jsp
 		model.addAttribute("history", history);
+		
+		Product currentProduct = productDAL.getProduct(id);
+		List<Product> relatedProduct = productDAL.getProductsByCluster(id, session.getId());
+		model.addAttribute("product", currentProduct);
+		model.addAttribute("relatedProducts", relatedProduct);
 		return "home/detail";
 	}
 
@@ -111,13 +112,6 @@ public class HomeController {
 			HttpSession session, 
 			@RequestParam("history") int historyId) throws IOException, InterruptedException  {
 		System.out.println("viewdetail2");
-		SatisfyProduct sp = new SatisfyProduct(new SatisfyProductKey(id, historyId), historyDAO.getHistory(historyId), productDAL.getProduct(id));
-		historyDAO.updateSatisfyProduct(sp);
-		
-		Product currentProduct = productDAL.getProduct(id);
-		List<Product> relatedProduct = productDAL.getProductsByCluster(id);
-		model.addAttribute("product", currentProduct);
-		model.addAttribute("relatedProducts", relatedProduct);
 		
 		// Get account in http session
 		Account account = (Account) session.getAttribute("acc");
@@ -126,6 +120,15 @@ public class HomeController {
 		History history = historyDAO.saveHistory(new History(0, username, new Date(), session.getId(), id, null));
 		// Pass history data row to jsp
 		model.addAttribute("history", history);
+		
+		SatisfyProduct sp = new SatisfyProduct(new SatisfyProductKey(id, historyId), historyDAO.getHistory(historyId), productDAL.getProduct(id));
+		historyDAO.updateSatisfyProduct(sp);
+		
+		Product currentProduct = productDAL.getProduct(id);
+		List<Product> relatedProduct = productDAL.getProductsByCluster(id, session.getId());
+		model.addAttribute("product", currentProduct);
+		model.addAttribute("relatedProducts", relatedProduct);
+		
 		return "home/detail";
 	}
 }

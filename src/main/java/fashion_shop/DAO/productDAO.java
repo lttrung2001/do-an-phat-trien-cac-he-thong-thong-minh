@@ -1,8 +1,12 @@
 package fashion_shop.DAO;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -19,11 +23,18 @@ import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
 import fashion_shop.entity.Product;
 import fashion_shop.entity.ProductCategory;
 import fashion_shop.entity.Rating;
 import fashion_shop.entity.SizeAndColor;
 import fashion_shop.entity.SizeAndColor.PK;
+import fashion_shop.model.APIResult;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @Transactional
 @Repository
@@ -51,14 +62,25 @@ public class productDAO {
 		Query query = session.createQuery(hql);
 		List<Product> listProd = query.list();
 		return listProd;
-	}
+	} 
 	
-	public List<Product> getProductsByCluster(String id) throws IOException, InterruptedException {
+	public List<Product> getProductsByCluster(String id, String sessionId) throws IOException, InterruptedException {
+		String url = "http://localhost:8000/get-history-cluster/"+sessionId;
+		OkHttpClient client = new OkHttpClient();
+		  Request request = new Request.Builder()
+		      .url(url)
+		      .build();
+	
+		  Response response = client.newCall(request).execute();
+		  Gson gson = new Gson();
+		  APIResult result = gson.fromJson(response.body().string(), APIResult.class);
+		  System.out.println(result.toString());
+		
 		Session session = factory.getCurrentSession();
 		Product currentProduct = (Product) session.get(Product.class, id);
 		String hql = String.format("from Product where id != %s and productCluster = %d and ProdCategory.idCategory = %d", 
 				currentProduct.getIdProduct(), 
-				currentProduct.getProductCluster(),
+				result.getCluster(),
 				currentProduct.getProductCategory().getIdCategory());
 		Query query = session.createQuery(hql);
 		List<Product> listProd = query.list();
@@ -83,15 +105,6 @@ public class productDAO {
 				return avgRating1.compareTo(avgRating2);
 			}
 		});
-		Process p = Runtime.getRuntime().exec("C:/Users/THANHTRUNG/miniconda3/envs/tf-gpu/python.exe \"c:/Users/THANHTRUNG/OneDr\r\n"
-				+ "ive - student.ptithcm.edu.vn/Desktop/eclipse_workspace/do-an-phat-trien-cac-he-thong-thong-minh/kmeans-clustering.py\"");
-		BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		String line;
-		while ((line = in.readLine()) != null) {
-		    System.out.println(line);
-		}
-		p.waitFor();
-		System.out.println("ok!");
 		return listProd.subList(0, 20);
 	}
 	
