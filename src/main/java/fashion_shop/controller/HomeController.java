@@ -81,12 +81,13 @@ public class HomeController {
 		return "home/products";
 	}	
 	
-	// view product_detail
-	@RequestMapping(value = { "detail/{idProduct}" },method = RequestMethod.GET)
+	
+	@RequestMapping(value = { "detail/{idProduct}" },
+			method = RequestMethod.GET)
 	public String view_product_detail(ModelMap model, 
 			@PathVariable("idProduct") String id, 
 			HttpSession session) throws IOException, InterruptedException  {
-		
+		System.out.println("viewdetail1");
 		Product currentProduct = productDAL.getProduct(id);
 		List<Product> relatedProduct = productDAL.getProductsByCluster(id);
 		model.addAttribute("product", currentProduct);
@@ -101,7 +102,7 @@ public class HomeController {
 		model.addAttribute("history", history);
 		return "home/detail";
 	}
-	
+
 	@RequestMapping(value = { "detail/{idProduct}" },
 			method = RequestMethod.GET, 
 			params = "history")
@@ -109,6 +110,7 @@ public class HomeController {
 			@PathVariable("idProduct") String id, 
 			HttpSession session, 
 			@RequestParam("history") int historyId) throws IOException, InterruptedException  {
+		System.out.println("viewdetail2");
 		SatisfyProduct sp = new SatisfyProduct(new SatisfyProductKey(id, historyId), historyDAO.getHistory(historyId), productDAL.getProduct(id));
 		historyDAO.updateSatisfyProduct(sp);
 		

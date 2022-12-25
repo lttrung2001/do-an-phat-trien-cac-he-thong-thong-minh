@@ -56,7 +56,10 @@ public class productDAO {
 	public List<Product> getProductsByCluster(String id) throws IOException, InterruptedException {
 		Session session = factory.getCurrentSession();
 		Product currentProduct = (Product) session.get(Product.class, id);
-		String hql = String.format("from Product where id != %s and productCluster = %d", currentProduct.getIdProduct(), currentProduct.getProductCluster());
+		String hql = String.format("from Product where id != %s and productCluster = %d and ProdCategory.idCategory = %d", 
+				currentProduct.getIdProduct(), 
+				currentProduct.getProductCluster(),
+				currentProduct.getProductCategory().getIdCategory());
 		Query query = session.createQuery(hql);
 		List<Product> listProd = query.list();
 		listProd.sort(new Comparator<Product>() {

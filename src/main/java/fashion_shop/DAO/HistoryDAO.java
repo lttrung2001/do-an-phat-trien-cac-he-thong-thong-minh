@@ -31,14 +31,13 @@ public class HistoryDAO {
 			t.commit();
 			session.refresh(h);
 			System.out.println(h.getId());
+			return h;
 		} catch(Exception ex) {
 			ex.printStackTrace();
 			t.rollback();
-			return null;
-		} finally {
 			session.close();
+			return null;
 		}
-		return h;
 	}
 	
 	public History getHistory(int id) {
