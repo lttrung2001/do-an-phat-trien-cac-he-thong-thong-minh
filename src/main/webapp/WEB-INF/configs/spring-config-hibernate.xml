@@ -20,7 +20,7 @@
 			p:driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 			p:url="jdbc:sqlserver://localhost:1433; Database=Fashion_Shop"
 			p:username="sa"
-			p:password="tt">
+			p:password="123456">
 	</bean>
 	
 	<!-- Cấu hình Hibernate -->
