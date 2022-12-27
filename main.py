@@ -39,59 +39,62 @@ def read_root():
 
 @app.get("/cluster")
 def cluster():
-    engine = create_engine(connection_url)
+    try:
+        engine = create_engine(connection_url)
 
-    query = "SELECT ID,Price,Brand,Gender,ReleaseTime,ProductType,ProductMaterial FROM Product"
-    df = pd.read_sql(query, engine)
+        query = "SELECT ID,Price,Brand,Gender,ReleaseTime,ProductType,ProductMaterial FROM Product"
+        df = pd.read_sql(query, engine)
 
-    list_ID=df["ID"].values.tolist()
-    df.drop(['ID'], axis=1, inplace=True)
+        list_ID=df["ID"].values.tolist()
+        df.drop(['ID'], axis=1, inplace=True)
 
-    X=df
-    brandInt=X['Brand']
-    typeInt=X['ProductType']
-    genderInt=X['Gender']
-    clothInt=X['ProductMaterial']
-    le = LabelEncoder()
+        X=df
+        brandInt=X['Brand']
+        typeInt=X['ProductType']
+        genderInt=X['Gender']
+        clothInt=X['ProductMaterial']
+        le = LabelEncoder()
 
-    X['Brand'] = le.fit_transform(X['Brand'])
-    brandInt = le.transform(brandInt)
-    X['ProductType'] = le.fit_transform(X['ProductType'])
-    typeInt = le.transform(typeInt)
-    X['Gender'] = le.fit_transform(X['Gender'])
-    genderInt = le.transform(genderInt)
-    X['ProductMaterial'] = le.fit_transform(X['ProductMaterial'])
-    clothInt = le.transform(clothInt)
-    cols = X.columns
-    ms = MinMaxScaler()
+        X['Brand'] = le.fit_transform(X['Brand'])
+        brandInt = le.transform(brandInt)
+        X['ProductType'] = le.fit_transform(X['ProductType'])
+        typeInt = le.transform(typeInt)
+        X['Gender'] = le.fit_transform(X['Gender'])
+        genderInt = le.transform(genderInt)
+        X['ProductMaterial'] = le.fit_transform(X['ProductMaterial'])
+        clothInt = le.transform(clothInt)
+        cols = X.columns
+        ms = MinMaxScaler()
 
-    X = ms.fit_transform(X)
-    X = pd.DataFrame(X, columns=[cols])
-    # print(X.head())
+        X = ms.fit_transform(X)
+        X = pd.DataFrame(X, columns=[cols])
+        # print(X.head())
 
-    print(find_K(X))
-    kmeans = KMeans(n_clusters=find_K(X), random_state=0) 
-    cluster_list=kmeans.fit_predict(X)
-    # save model
-    with open("C:/Users/THANHTRUNG/OneDrive - student.ptithcm.edu.vn/Desktop/eclipse_workspace/do-an-phat-trien-cac-he-thong-thong-minh/model.pkl", "wb") as f:
-        pickle.dump(kmeans, f)
-    # In list cụm:
-    print(cluster_list)
-    # Lấy số lượng trong mỗi cụm
-    print(collections.Counter(cluster_list))    
-
-
-    # print(df[df.columns[0]].count())
-    # updating_cluster="UPDATE Product SET ProductCluster=1 where Product.ID<10"
+        print(find_K(X))
+        kmeans = KMeans(n_clusters=find_K(X), random_state=0) 
+        cluster_list=kmeans.fit_predict(X)
+        # save model
+        with open("C:/Users/THANHTRUNG/OneDrive - student.ptithcm.edu.vn/Desktop/eclipse_workspace/do-an-phat-trien-cac-he-thong-thong-minh/model.pkl", "wb") as f:
+            pickle.dump(kmeans, f)
+        # In list cụm:
+        print(cluster_list)
+        # Lấy số lượng trong mỗi cụm
+        print(collections.Counter(cluster_list))    
 
 
-    for i in range(df[df.columns[0]].count()):
-        engine.execute('UPDATE Product SET ProductCluster='+ str(cluster_list[i]) + ' where Product.ID='+str(list_ID[i]))
-    # cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';ENCRYPT=no;UID='+username+';PWD='+ password)
-    # cursor = cnxn.cursor()
-    # cursor.execute("SELECT @@version;")
-    # row = cursor.fetchone()
-    return {"code": 200, "message": "success"}
+        # print(df[df.columns[0]].count())
+        # updating_cluster="UPDATE Product SET ProductCluster=1 where Product.ID<10"
+
+        for i in range(df[df.columns[0]].count()):
+            engine.execute('UPDATE Product SET ProductCluster='+ str(cluster_list[i]) + ' where Product.ID='+str(list_ID[i]))
+        # cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';ENCRYPT=no;UID='+username+';PWD='+ password)
+        # cursor = cnxn.cursor()
+        # cursor.execute("SELECT @@version;")
+        # row = cursor.fetchone()
+        return {"code": 200, "message": "success"}
+    except Exception as e:
+        print(e)
+        return {"code": 500, "message": "failed"}
 
 def find_K(dataset):
     distortions = []
@@ -108,40 +111,45 @@ def find_K(dataset):
 
 @app.get("/get-history-cluster/{session_id}")
 def get_history_cluster(session_id: str, q: Union[str, None] = None):
-    engine = create_engine(connection_url)
-    queryy = "SELECT Product.ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM (SELECT * FROM History WHERE SessionID = '{0}') AS H INNER JOIN Product ON Product.ID = H.ProductID".format(session_id)
-    query = "SELECT ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM Product"
-    dff = pd.read_sql(queryy, engine)
-    df = pd.read_sql(query, engine)
-    df = pd.concat([df, dff])
+    try:
+        engine = create_engine(connection_url)
+        queryy = "SELECT Product.ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM (SELECT * FROM History WHERE SessionID = '{0}') AS H INNER JOIN Product ON Product.ID = H.ProductID".format(session_id)
+        query = "SELECT ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM Product"
+        dff = pd.read_sql(queryy, engine)
+        df = pd.read_sql(query, engine)
+        df = pd.concat([df, dff])
 
-    list_ID=df["ID"].values.tolist()
-    df.drop(['ID'], axis=1, inplace=True)
-    X=df
-    brandInt=X['Brand']
-    typeInt=X['ProductType']
-    genderInt=X['Gender']
-    clothInt=X['ProductMaterial']
-    le = LabelEncoder()
+        list_ID=df["ID"].values.tolist()
+        df.drop(['ID'], axis=1, inplace=True)
+        X=df
+        brandInt=X['Brand']
+        typeInt=X['ProductType']
+        genderInt=X['Gender']
+        clothInt=X['ProductMaterial']
+        le = LabelEncoder()
 
-    X['Brand'] = le.fit_transform(X['Brand'])
-    brandInt = le.transform(brandInt)
-    X['ProductType'] = le.fit_transform(X['ProductType'])
-    typeInt = le.transform(typeInt)
-    X['Gender'] = le.fit_transform(X['Gender'])
-    genderInt = le.transform(genderInt)
-    X['ProductMaterial'] = le.fit_transform(X['ProductMaterial'])
-    clothInt = le.transform(clothInt)
-    cols = X.columns
-    ms = MinMaxScaler()
+        X['Brand'] = le.fit_transform(X['Brand'])
+        brandInt = le.transform(brandInt)
+        X['ProductType'] = le.fit_transform(X['ProductType'])
+        typeInt = le.transform(typeInt)
+        X['Gender'] = le.fit_transform(X['Gender'])
+        genderInt = le.transform(genderInt)
+        X['ProductMaterial'] = le.fit_transform(X['ProductMaterial'])
+        clothInt = le.transform(clothInt)
+        cols = X.columns
+        ms = MinMaxScaler()
 
-    X = ms.fit_transform(X)
-    X = pd.DataFrame(X, columns=[cols])
-    X = X.tail(n=len(dff))
-    X = X.mean(axis=0)
+        X = ms.fit_transform(X)
+        X = pd.DataFrame(X, columns=[cols])
+        X = X.tail(n=len(dff))
+        X = X.mean(axis=0)
 
-    # load model
-    with open("C:/Users/THANHTRUNG/OneDrive - student.ptithcm.edu.vn/Desktop/eclipse_workspace/do-an-phat-trien-cac-he-thong-thong-minh/model.pkl", "rb") as f:
-        kmeans = pickle.load(f)
-    cluster_id = kmeans.predict([[X[0], X[1], X[2], X[3], X[4], X[5]], ])[0]
-    return {"code": 200, "cluster": int(cluster_id)}
+        # load model
+        with open("C:/Users/THANHTRUNG/OneDrive - student.ptithcm.edu.vn/Desktop/eclipse_workspace/do-an-phat-trien-cac-he-thong-thong-minh/model.pkl", "rb") as f:
+            kmeans = pickle.load(f)
+        cluster_id = kmeans.predict([[X[0], X[1], X[2], X[3], X[4], X[5]], ])[0]
+        return {"code": 200, "cluster": int(cluster_id)}
+
+    except Exception as e:
+        print(e)
+        return {"code": 500, "cluster": 500}
