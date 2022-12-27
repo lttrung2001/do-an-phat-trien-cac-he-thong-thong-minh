@@ -145,8 +145,14 @@
 <!-- 	                        	<input type="text" name="gender" id="" placeholder="Type gender here..."> -->
 	                        	<div class="product-form">
 	                                <select name="gender" id="">
-	                                    	<option value=1>Male</option>
-	                                    	<option value=0>Female</option>
+	                                    	<c:if test="${p.gender }">
+	                                    		<option selected="selected" value=1>Male</option>
+	                                    		<option value=0>Female</option>
+	                                    	</c:if>
+	                                    	<c:if test="${!p.gender }">
+	                                    		<option value=1>Male</option>
+	                                    		<option selected="selected" value=0>Female</option>
+	                                    	</c:if>
 	                                </select>
 	                            </div>
 	                        </div>
