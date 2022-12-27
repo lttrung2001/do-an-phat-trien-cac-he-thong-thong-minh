@@ -136,28 +136,34 @@
 	                        </div>
 	                        
 	                        <div class="col-6 field">
-	                            <label for="">Brand:</label>
-	                            <input name="brand" type="text" value="${p.brand }" >
+	                        	<label for="">Brand:</label>
+	                        	<input type="text" name="brand" id="" placeholder="Type brand here..." value="${p.brand }">
 	                        </div>
 	                        
 	                        <div class="col-6 field">
-	                            <label for="">Gender:</label>
-	                            <input name="gender" type="text" value="${p.gender }" >
+	                        	<label for="">Gender:</label>
+<!-- 	                        	<input type="text" name="gender" id="" placeholder="Type gender here..."> -->
+	                        	<div class="product-form">
+	                                <select name="gender" id="">
+	                                    	<option value=1>Male</option>
+	                                    	<option value=0>Female</option>
+	                                </select>
+	                            </div>
 	                        </div>
 	                        
 	                        <div class="col-6 field">
-	                            <label for="">Release Time:</label>
-	                            <input name="releaseTime" type="date" value="${p.releaseTime }" >
+	                        	<label for="">Release Time:</label>
+	                        	<input type="number" name="releaseTime" id="" placeholder="Type release time here..." value="${p.releaseTime }" }>
 	                        </div>
 	                        
 	                        <div class="col-6 field">
-	                            <label for="">Product Type:</label>
-	                            <input name="productType" type="text" value="${p.productType }" >
+	                        	<label for="">Product Type:</label>
+	                        	<input type="text" name="productType" id="" placeholder="Type product type here..." value="${p.productType }">
 	                        </div>
 	                        
-	                        <div class="col-6 field">
-	                            <label for="">Product Material:</label>
-	                            <input name="material" type="text" value="${p.material }" >
+	                        <div class="col-6 field" style="position: relative;">
+	                        	<label for="">Product Material:</label>
+	                        	<input type="text" name="material" id="" placeholder="Type product Material here..." value="${p.material }">
 	                        </div>
 	
 	                    </div>

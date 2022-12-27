@@ -118,7 +118,7 @@ public class productDAO {
 		return listCat;
 	}
 	
-	public ProductCategory getCat( String id) {
+	public ProductCategory getCat( int id) {
 		Session session = factory.getCurrentSession();
 		ProductCategory Cat = (ProductCategory) session.get(ProductCategory.class, id);
 		return Cat;
@@ -162,13 +162,6 @@ public class productDAO {
 		return list;
 	}
 	
-	public Map<Integer, String> getHMGender() {
-		Map<Integer, String> map = new HashMap<Integer, String>();
-		map.put(0, "Nu");
-		map.put(1, "Nam");
-		return map;
-	}
-	
 	public boolean saveProduct( Product prod) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
@@ -191,17 +184,27 @@ public class productDAO {
 			String cat,
 			String name,
 			Float price,
-			String image) {
+			String image,
+			String brand,
+			boolean gender,
+			int releaseTime,
+			String productType,
+			String material) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		
 		
 		Product prod = (Product) session.get(Product.class, prodID);
 		
-		prod.setProductCategory(getCat(cat));
+		prod.setProductCategory(getCat(Integer.parseInt(cat)));
 		prod.setName(name);
 		prod.setPrice(price);
 		prod.setImage(image);
+		prod.setBrand(brand);
+		prod.setGender(gender);
+		prod.setReleaseTime(releaseTime);
+		prod.setProductType(productType);
+		prod.setMaterial(material);
 		
 		try {
 			session.update(prod);
