@@ -55,8 +55,21 @@ def cluster():
         clothInt=X['ProductMaterial']
         le = LabelEncoder()
 
-        X['Brand'] = le.fit_transform(X['Brand'])
-        brandInt = le.transform(brandInt)
+        # https://brandirectory.com/rankings/apparel/table
+        X['Brand'] = np.where(X['Brand'] == 'Nike', 10, 
+        np.where(X['Brand'] == 'Louis Vuitton', 9,
+        np.where(X['Brand'] == 'GUCCI', 8,
+        np.where(X['Brand'] == 'Chanel', 7,
+        np.where(X['Brand'] == 'Adidas', 6,
+        np.where(X['Brand'] == 'Hermes', 5,
+        np.where(X['Brand'] == 'ZARA', 4,
+        np.where(X['Brand'] == 'H&M', 3,
+        np.where(X['Brand'] == 'Cartier', 2,
+        np.where(X['Brand'] == 'UNIQLO', 1,
+        0))))))))))
+        print(X['Brand'])
+        # X['Brand'] = le.fit_transform(X['Brand'])
+        # brandInt = le.transform(brandInt)
         X['ProductType'] = le.fit_transform(X['ProductType'])
         typeInt = le.transform(typeInt)
         X['Gender'] = le.fit_transform(X['Gender'])
@@ -113,9 +126,9 @@ def find_K(dataset):
 def get_history_cluster(session_id: str, q: Union[str, None] = None):
     try:
         engine = create_engine(connection_url)
-        queryy = "SELECT Product.ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM (SELECT * FROM History WHERE SessionID = '{0}') AS H INNER JOIN Product ON Product.ID = H.ProductID".format(session_id)
+        history_query = "SELECT Product.ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM (SELECT * FROM History WHERE SessionID = '{0}') AS H INNER JOIN Product ON Product.ID = H.ProductID".format(session_id)
         query = "SELECT ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM Product"
-        dff = pd.read_sql(queryy, engine)
+        dff = pd.read_sql(history_query, engine)
         df = pd.read_sql(query, engine)
         df = pd.concat([df, dff])
 
@@ -128,8 +141,20 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         clothInt=X['ProductMaterial']
         le = LabelEncoder()
 
-        X['Brand'] = le.fit_transform(X['Brand'])
-        brandInt = le.transform(brandInt)
+        https://brandirectory.com/rankings/apparel/table
+        np.where(X['Brand'] == 'Nike', 10, 
+        np.where(X['Brand'] == 'Louis Vuitton', 9,
+        np.where(X['Brand'] == 'GUCCI', 8,
+        np.where(X['Brand'] == 'Chanel', 7,
+        np.where(X['Brand'] == 'Adidas', 6,
+        np.where(X['Brand'] == 'Hermes', 5,
+        np.where(X['Brand'] == 'ZARA', 4,
+        np.where(X['Brand'] == 'H&M', 3,
+        np.where(X['Brand'] == 'Cartier', 2,
+        np.where(X['Brand'] == 'UNIQLO', 1,
+        0))))))))))
+        # X['Brand'] = le.fit_transform(X['Brand'])
+        # brandInt = le.transform(brandInt)
         X['ProductType'] = le.fit_transform(X['ProductType'])
         typeInt = le.transform(typeInt)
         X['Gender'] = le.fit_transform(X['Gender'])
