@@ -141,7 +141,7 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         clothInt=X['ProductMaterial']
         le = LabelEncoder()
 
-        https://brandirectory.com/rankings/apparel/table
+        # https://brandirectory.com/rankings/apparel/table
         np.where(X['Brand'] == 'Nike', 10, 
         np.where(X['Brand'] == 'Louis Vuitton', 9,
         np.where(X['Brand'] == 'GUCCI', 8,
