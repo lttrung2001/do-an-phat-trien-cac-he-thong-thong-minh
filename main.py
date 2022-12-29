@@ -177,4 +177,4 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
 
     except Exception as e:
         print(e)
-        return {"code": 500, "cluster": 500}
+        return {"code": 500, "message": "failed"}
