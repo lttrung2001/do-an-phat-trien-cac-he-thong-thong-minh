@@ -156,7 +156,8 @@ public class AdminController {
 			return "admin/adminAddProd";
 		}
 		
-		String url = "http://localhost:8000/cluster";
+		factory.getCurrentSession().refresh(prod);
+		String url = "http://localhost:8000/predict_product_cluster/"+prod.getIdProduct();
 		OkHttpClient client = new OkHttpClient();
 	  Request request = new Request.Builder()
 	      .url(url)
@@ -164,7 +165,7 @@ public class AdminController {
 
 	  Response response = client.newCall(request).execute();
 	  Gson gson = new Gson();
-	  APIResult2 result = gson.fromJson(response.body().string(), APIResult2.class);
+	  APIResult result = gson.fromJson(response.body().string(), APIResult.class);
 	  System.out.println(result.toString());
 		
 		return "redirect:/admin/adminProducts.htm";
@@ -287,7 +288,8 @@ public class AdminController {
 
 		
 		if(productDAL.updateProduct(prodID, cat, name, price, image, brand, gender, releaseTime, productType, material)) {
-			String url = "http://localhost:8000/cluster";
+			Product p = (Product) factory.getCurrentSession().get(Product.class, prodID);
+			String url = "http://localhost:8000/predict_product_cluster/"+p.getIdProduct();
 			OkHttpClient client = new OkHttpClient();
 		  Request request = new Request.Builder()
 		      .url(url)
@@ -295,7 +297,7 @@ public class AdminController {
 	
 		  Response response = client.newCall(request).execute();
 		  Gson gson = new Gson();
-		  APIResult2 result = gson.fromJson(response.body().string(), APIResult2.class);
+		  APIResult result = gson.fromJson(response.body().string(), APIResult.class);
 		  System.out.println(result.toString());
 			return "redirect:/admin/adminProd/" + prodID +  ".htm";
 		}
