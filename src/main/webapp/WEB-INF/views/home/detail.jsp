@@ -121,6 +121,12 @@ pageEncoding="UTF-8"%>
                         Related Products
                         <a href="home/products.htm" class="more hover-p-color">VIEW MORE <i class="fa-solid fa-arrow-right"></i></a>
                     </h4>
+                    <label for="sort-type">Order: </label>
+					<select id="sort-type">
+						<option value=""></option>
+						<option value="asc">Ascending by price</option>
+						<option value="dsc">Descending by price</option>
+					</select>
                     <div class="owl-carousel owl-theme">
 					<c:forEach var="p" items="${relatedProducts}" begin="0" end="7" step="1">
 						<div class="col-4 product">
@@ -177,4 +183,49 @@ pageEncoding="UTF-8"%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
     <script src="<c:url value='/resources/home/dist/js/owl.carousel.js' />"></script>
     <script src="<c:url value='/resources/home/dist/js/home.js' />"></script>
+    <script type="text/javascript">
+		$('#sort-type')
+				.change(
+						function() {
+							const sortValue = $(this).val();
+							var list = document.querySelector('.owl-stage')
+							var nodesToSort = list
+									.querySelectorAll('.owl-item');
+							if (sortValue === 'asc') {
+								Array.prototype.map
+										.call(
+												nodesToSort,
+												function(node) {
+													return {
+														node : node,
+														relevantText : parseFloat(node
+																.querySelector('.product-price').textContent)
+													};
+												}).sort(
+												function(a, b) {
+													return a.relevantText
+															- b.relevantText;
+												}).forEach(function(item) {
+											list.appendChild(item.node);
+										});
+							} else if (sortValue === 'dsc') {
+								Array.prototype.map
+										.call(
+												nodesToSort,
+												function(node) {
+													return {
+														node : node,
+														relevantText : parseFloat(node
+																.querySelector('.product-price').textContent)
+													};
+												}).sort(
+												function(a, b) {
+													return b.relevantText
+															- a.relevantText;
+												}).forEach(function(item) {
+											list.appendChild(item.node);
+										});
+							}
+						})
+	</script>
 </html>
