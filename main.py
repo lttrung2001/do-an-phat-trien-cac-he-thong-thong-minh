@@ -127,9 +127,9 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         engine = create_engine(connection_url)
         history_query = "SELECT Product.ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM (SELECT * FROM History WHERE SessionID = '{0}') AS H INNER JOIN Product ON Product.ID = H.ProductID".format(session_id)
         query = "SELECT ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM Product"
-        dff = pd.read_sql(history_query, engine)
+        df_history = pd.read_sql(history_query, engine)
         df = pd.read_sql(query, engine)
-        df = pd.concat([df, dff])
+        df = pd.concat([df, df_history])
 
         list_ID=df["ID"].values.tolist()
         df.drop(['ID'], axis=1, inplace=True)
@@ -165,7 +165,7 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
 
         X = ms.fit_transform(X)
         X = pd.DataFrame(X, columns=[cols])
-        X = X.tail(n=len(dff))
+        X = X.tail(n=len(df_history))
         X = X.mean(axis=0)
 
         # load model
