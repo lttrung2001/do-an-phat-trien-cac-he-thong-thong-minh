@@ -42,7 +42,7 @@ def cluster():
     try:
         engine = create_engine(connection_url)
 
-        query = "SELECT ID,Price,Brand,Gender,ReleaseTime,ProductType,ProductMaterial FROM Product"
+        query = "SELECT ID,IDCategory,Price,Brand,Gender,ReleaseTime,ProductType,ProductMaterial FROM Product"
         df = pd.read_sql(query, engine)
 
         list_ID=df["ID"].values.tolist()
@@ -75,6 +75,19 @@ def cluster():
         genderInt = le.transform(genderInt)
         X['ProductMaterial'] = le.fit_transform(X['ProductMaterial'])
         clothInt = le.transform(clothInt)
+
+        price_max = X['Price'].max()
+        price_min = X['Price'].min()
+        delta = (price_max - price_min) / 3
+
+        fpoint = price_min + delta
+        spoint = price_max - delta
+
+        X['Price'] = np.where(X['Price'] < fpoint, 0, X['Price'])
+        X['Price'] = np.where((X['Price'] >= fpoint) & (X['Price'] <= spoint), 1, X['Price'])
+        X['Price'] = np.where(X['Price'] > spoint, 2, X['Price'])
+        print(X['Price'][:10])
+
         cols = X.columns
         ms = MinMaxScaler()
 
@@ -125,8 +138,8 @@ def find_K(dataset):
 def get_history_cluster(session_id: str, q: Union[str, None] = None):
     try:
         engine = create_engine(connection_url)
-        history_query = "SELECT Product.ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM (SELECT * FROM History WHERE SessionID = '{0}') AS H INNER JOIN Product ON Product.ID = H.ProductID".format(session_id)
-        query = "SELECT ID, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM Product"
+        history_query = "SELECT Product.ID, IDCategory, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM (SELECT * FROM History WHERE SessionID = '{0}') AS H INNER JOIN Product ON Product.ID = H.ProductID".format(session_id)
+        query = "SELECT ID, IDCategory, Price, Brand, Gender, ReleaseTime, ProductType, ProductMaterial FROM Product"
         df_history = pd.read_sql(history_query, engine)
         df = pd.read_sql(query, engine)
         df = pd.concat([df, df_history])
