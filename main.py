@@ -67,7 +67,6 @@ def cluster():
         np.where(X['Brand'] == 'Cartier', 2,
         np.where(X['Brand'] == 'UNIQLO', 1,
         0))))))))))
-        print(X['Brand'])
         # X['Brand'] = le.fit_transform(X['Brand'])
         # brandInt = le.transform(brandInt)
         X['ProductType'] = le.fit_transform(X['ProductType'])
@@ -142,7 +141,7 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         le = LabelEncoder()
 
         # https://brandirectory.com/rankings/apparel/table
-        np.where(X['Brand'] == 'Nike', 10, 
+        X['Brand'] = np.where(X['Brand'] == 'Nike', 10, 
         np.where(X['Brand'] == 'Louis Vuitton', 9,
         np.where(X['Brand'] == 'GUCCI', 8,
         np.where(X['Brand'] == 'Chanel', 7,
