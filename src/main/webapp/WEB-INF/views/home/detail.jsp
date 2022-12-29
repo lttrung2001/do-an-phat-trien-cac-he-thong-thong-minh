@@ -64,8 +64,8 @@ pageEncoding="UTF-8"%>
                             </tr>
                             <tr>
                                 <th>Gender</th>
-                                <td>${product.gender }</td>
-
+                                <c:if test="${p.gender }"><td>Male</td></c:if>
+								<c:if test="${!p.gender }"><td>Female</td></c:if>
                             </tr>
                             <tr>
                                 <th>Release time</th>
