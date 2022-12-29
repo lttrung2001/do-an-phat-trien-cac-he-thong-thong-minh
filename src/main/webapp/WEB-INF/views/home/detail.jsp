@@ -122,7 +122,7 @@ pageEncoding="UTF-8"%>
                         <a href="home/products.htm" class="more hover-p-color">VIEW MORE <i class="fa-solid fa-arrow-right"></i></a>
                     </h4>
                     <div class="owl-carousel owl-theme">
-					<c:forEach var="p" items="${relatedProducts}" begin="0" end="20" step="1">
+					<c:forEach var="p" items="${relatedProducts}" begin="0" end="7" step="1">
 						<div class="col-4 product">
 							<div class="product-image">
 								<img
