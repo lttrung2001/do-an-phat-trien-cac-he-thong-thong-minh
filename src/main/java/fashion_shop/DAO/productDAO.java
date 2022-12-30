@@ -105,7 +105,7 @@ public class productDAO {
 				return avgRating1.compareTo(avgRating2);
 			}
 		});
-		return listProd.subList(0, 7);
+		return listProd;
 	}
 	
 	

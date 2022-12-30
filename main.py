@@ -88,7 +88,6 @@ def cluster():
         X['Price'] = np.where(X['Price'] < fpoint, 0, X['Price'])
         X['Price'] = np.where((X['Price'] >= fpoint) & (X['Price'] <= spoint), 1, X['Price'])
         X['Price'] = np.where(X['Price'] > spoint, 2, X['Price'])
-        print(X['Price'][:10])
 
         cols = X.columns
         ms = MinMaxScaler()
@@ -143,6 +142,7 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         df = pd.read_sql(query, engine)
         df = pd.concat([df, df_history])
         df.replace(np.NaN, 0)
+        print(df)
 
         list_ID=df["ID"].values.tolist()
         df.drop(['ID'], axis=1, inplace=True)
@@ -173,6 +173,18 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         genderInt = le.transform(genderInt)
         X['ProductMaterial'] = le.fit_transform(X['ProductMaterial'])
         clothInt = le.transform(clothInt)
+
+        price_max = X['Price'].max()
+        price_min = X['Price'].min()
+        delta = (price_max - price_min) / 3
+
+        fpoint = price_min + delta
+        spoint = price_max - delta
+
+        X['Price'] = np.where(X['Price'] < fpoint, 0, X['Price'])
+        X['Price'] = np.where((X['Price'] >= fpoint) & (X['Price'] <= spoint), 1, X['Price'])
+        X['Price'] = np.where(X['Price'] > spoint, 2, X['Price'])
+        
         cols = X.columns
         ms = MinMaxScaler()
 
@@ -184,7 +196,7 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         # load model
         with open("C:/Users/THANHTRUNG/OneDrive - student.ptithcm.edu.vn/Desktop/eclipse_workspace/do-an-phat-trien-cac-he-thong-thong-minh/model.pkl", "rb") as f:
             kmeans = pickle.load(f)
-        cluster_id = kmeans.predict([[X[0], X[1], X[2], X[3], X[4], X[5]], ])[0]
+        cluster_id = kmeans.predict([[X[0], X[1], X[2], X[3], X[4], X[5], X[6]], ])[0]
         return {"code": 200, "cluster": int(cluster_id)}
 
     except Exception as e:
