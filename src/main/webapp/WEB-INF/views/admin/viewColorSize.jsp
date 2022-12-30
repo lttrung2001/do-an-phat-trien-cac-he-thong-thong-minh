@@ -101,8 +101,11 @@
     							<tr>
 		                            <td>${p.idProduct }</td>
 		                            <td>${p.brand }</td>
-		                            <c:if test="${p.gender }"><td>Male</td></c:if>
-		                            <c:if test="${!p.gender }"><td>Female</td></c:if>
+		                            <c:if test="${not empty p.gender }">
+		                            	<c:if test="${p.gender }"><td>Male</td></c:if>
+		                            	<c:if test="${!p.gender }"><td>Female</td></c:if>
+		                            </c:if>
+		                         	<c:if test="${empty p.gender }"><td>None</td></c:if>
 		                            <td>${p.releaseTime }</td>
 		                            <td>${p.productType }</td>
 		                            <td>${p.material }</td>

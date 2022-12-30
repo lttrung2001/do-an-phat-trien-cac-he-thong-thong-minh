@@ -133,8 +133,8 @@ public class AdminController {
 			@RequestParam("price") Float price, 
 			@RequestParam("image") String image,
 			@RequestParam("brand") String brand,
-			@RequestParam("gender") boolean gender,
-			@RequestParam("releaseTime") int releaseTime,
+			@RequestParam("gender") int gender,
+			@RequestParam("releaseTime") Integer releaseTime,
 			@RequestParam("productType") String productType,
 			@RequestParam("material") String material) throws IOException {
 		
@@ -145,7 +145,7 @@ public class AdminController {
 		prod.setPrice(price);
 		prod.setImage(image);
 		prod.setBrand(brand);
-		prod.setGender(gender);
+		prod.setGender(gender == -1 ? null : gender == 1 ? true : false);
 		prod.setReleaseTime(releaseTime);
 		prod.setProductType(productType);
 		prod.setMaterial(material);
@@ -184,6 +184,7 @@ public class AdminController {
 	/////////////Manage MIX PRODUCT
 	@RequestMapping(value="adminProd/{idProduct}", method=RequestMethod.GET)
 	public String showColorSize( ModelMap model, @PathVariable("idProduct") String id) {
+		System.out.println(productDAL.getProduct(id).toString());
 		model.addAttribute("p", productDAL.getProduct(id));
 		model.addAttribute("listC", productDAL.getLCS(id));
 		model.addAttribute("size", productDAL.getLCS(id).size());
@@ -280,13 +281,13 @@ public class AdminController {
 			@RequestParam("price") Float price, 
 			@RequestParam("image") String image,
 			@RequestParam("brand") String brand,
-			@RequestParam("gender") boolean gender,
-			@RequestParam("releaseTime") int releaseTime,
+			@RequestParam("gender") int gender,
+			@RequestParam("releaseTime") Integer releaseTime,
 			@RequestParam("productType") String productType,
 			@RequestParam("material") String material) throws IOException {
 
 		
-		if(productDAL.updateProduct(prodID, cat, name, price, image, brand, gender, releaseTime, productType, material)) {
+		if(productDAL.updateProduct(prodID, cat, name, price, image, brand, gender == -1 ? null : gender == 1 ? true : false, releaseTime, productType, material)) {
 			String url = "http://localhost:8000/cluster";
 			OkHttpClient client = new OkHttpClient();
 		  Request request = new Request.Builder()

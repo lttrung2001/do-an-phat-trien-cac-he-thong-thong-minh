@@ -44,6 +44,8 @@ def cluster():
 
         query = "SELECT ID,IDCategory,Price,Brand,Gender,ReleaseTime,ProductType,ProductMaterial FROM Product"
         df = pd.read_sql(query, engine)
+        df.replace(np.NaN, 0, inplace=True)
+        print(df)
 
         list_ID=df["ID"].values.tolist()
         df.drop(['ID'], axis=1, inplace=True)
@@ -112,10 +114,7 @@ def cluster():
 
         for i in range(df[df.columns[0]].count()):
             engine.execute('UPDATE Product SET ProductCluster='+ str(cluster_list[i]) + ' where Product.ID='+str(list_ID[i]))
-        # cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';ENCRYPT=no;UID='+username+';PWD='+ password)
-        # cursor = cnxn.cursor()
-        # cursor.execute("SELECT @@version;")
-        # row = cursor.fetchone()
+
         return {"code": 200, "message": "success"}
     except Exception as e:
         print(e)
@@ -143,6 +142,7 @@ def get_history_cluster(session_id: str, q: Union[str, None] = None):
         df_history = pd.read_sql(history_query, engine)
         df = pd.read_sql(query, engine)
         df = pd.concat([df, df_history])
+        df.replace(np.NaN, 0)
 
         list_ID=df["ID"].values.tolist()
         df.drop(['ID'], axis=1, inplace=True)

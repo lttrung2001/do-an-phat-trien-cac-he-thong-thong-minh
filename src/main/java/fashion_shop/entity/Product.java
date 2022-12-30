@@ -31,11 +31,11 @@ public class Product {
 	@Column(name = "Brand")
 	private String brand;
 	
-	@Column(name = "Gender")
-	private boolean gender;
+	@Column(name = "Gender", nullable = true)
+	private Boolean gender;
 	
-	@Column(name = "ReleaseTime")
-	private int releaseTime;
+	@Column(name = "ReleaseTime", nullable = true)
+	private Integer releaseTime;
 	
 	public Product() {
 		super();
@@ -55,8 +55,8 @@ public class Product {
 	private Collection<Rating> ratings;
 	
 
-public Product(String idProduct, String name, float price, String image, String brand, boolean gender,
-			int releaseTime, String productType, int productCluster, Collection<Cart> carts,
+public Product(String idProduct, String name, float price, String image, String brand, Boolean gender,
+			Integer releaseTime, String productType, int productCluster, Collection<Cart> carts,
 			ProductCategory prodCategory, String material) {
 		super();
 		this.idProduct = idProduct;
@@ -134,19 +134,19 @@ public Product(String idProduct, String name, float price, String image, String 
 		this.brand = brand;
 	}
 
-	public boolean isGender() {
+	public Boolean getGender() {
 		return gender;
 	}
 
-	public void setGender(boolean gender) {
+	public void setGender(Boolean gender) {
 		this.gender = gender;
 	}
 
-	public int getReleaseTime() {
+	public Integer getReleaseTime() {
 		return releaseTime;
 	}
 
-	public void setReleaseTime(int releaseTime) {
+	public void setReleaseTime(Integer releaseTime) {
 		this.releaseTime = releaseTime;
 	}
 

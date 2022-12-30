@@ -186,8 +186,8 @@ public class productDAO {
 			Float price,
 			String image,
 			String brand,
-			boolean gender,
-			int releaseTime,
+			Boolean gender,
+			Integer releaseTime,
 			String productType,
 			String material) {
 		Session session = factory.openSession();
